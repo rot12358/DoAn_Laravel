@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('tentruyen');
             $table->string('anhgioithieu');
             $table->string('theloai');
-            $table->string('thongtingioithieu');
+            $table->text('thongtingioithieu');
             $table->string('gia');
             $table->string('tacgia');
             $table->string('nxb');

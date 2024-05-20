@@ -14,13 +14,15 @@ class SupportRequest extends Mailable
     public $email;
     public $phone;
     public $address;
+    public $message;
 
-    public function __construct($name, $email, $phone, $address)
+    public function __construct($name, $email, $phone, $address,$message)
     {
         $this->name = $name;
         $this->email = $email;
         $this->phone = $phone;
         $this->address = $address;
+        $this->message = $message;
     }
 
     public function build()

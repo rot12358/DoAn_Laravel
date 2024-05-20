@@ -20,6 +20,7 @@ class CategoryFactory extends Factory
     {
         return [
             'theloaitruyen' => $this ->faker -> randomElement(['Truyện Thiếu Nhi','Truyện Hoạt Hình','Truyện Anime']),
+            'is_active' => true
             
           
         ];

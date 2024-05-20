@@ -23,7 +23,7 @@
                             <a class="nav-link" href="/sanpham">Sản phẩm</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/support">Hỗ trợ</a>
+                            <a class="nav-link" href="/support">Liên hệ</a>
                         </li>
                         <li class="nav-item dropdown">
                             @auth <!-- Kiểm tra xem người dùng đã đăng nhập hay chưa -->
@@ -31,6 +31,17 @@
                                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                     <li><a class="dropdown-item" href="{{ route('posts.create') }}">Thêm truyện</a></li>
                                     <li><a class="dropdown-item" href="{{ route('posts.index') }}">Chỉnh sửa truyện</a></li>
+                                </ul>
+                            @else <!-- Nếu chưa đăng nhập, không cho phép click vào phần "Thay đổi truyện" -->
+                                <a class="nav-link disabled" href="#" aria-disabled="true">Thay đổi truyện</a>
+                            @endauth
+                        </li>
+                        <li class="nav-item dropdown">
+                            @auth <!-- Kiểm tra xem người dùng đã đăng nhập hay chưa -->
+                                <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Thay đổi danh mục</a>
+                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <li><a class="dropdown-item" href="{{ route('categories.create') }}">Thêm Danh Mục</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('categories.index') }}">Chỉnh sửa Danh Mục</a></li>
                                 </ul>
                             @else <!-- Nếu chưa đăng nhập, không cho phép click vào phần "Thay đổi truyện" -->
                                 <a class="nav-link disabled" href="#" aria-disabled="true">Thay đổi truyện</a>
@@ -58,12 +69,12 @@
             </div>
         </nav>
         <!-- Phần ảnh dưới header -->
-        <div class="header-image" style="height: 600px; background-image: url('{{ asset('images/truyen.jpg') }}'); background-size: cover; background-position: center;"></div>
+        <div class="header-image" style="height: 300px; background-image: url('{{ asset('images/truyen.jpg') }}'); background-size: cover; background-position: center;"></div>
     </header>
 
     <!-- Nội dung chính của trang -->
     <div class="container">
-        @yield('content')
+       
     </div>
 
     <!-- Bootstrap JS và các kịch bản cần thiết khác -->

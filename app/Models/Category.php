@@ -11,7 +11,7 @@ class Category extends Model
     protected $table = 'categories';
     public $timestamps = false;
     protected $fillable = [
-        'theloaitruyen'
+        'theloaitruyen','is_active'
     ];
 
     public function posts()

@@ -46,20 +46,32 @@ Auth::routes();
 Route::post('/', 'PostController@store')->name('posts.show');
 // Route::get('/', [PostController::class, 'index']);
 Route::get('/posts/create', [PostController::class, 'create'])->name('posts.create');
-// Route::get('/posts/{id}/destroy', [PostController::class, 'destroy'])->name('posts.destroy');
 Route::post('/sanpham', [PostController::class, 'store'])->name('posts.store');
+Route::put('/posts/{id}', [PostController::class, 'update'])->name('posts.update');
+Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
+// Route::get('/posts/{id}/destroy', [PostController::class, 'destroy'])->name('posts.destroy');
+
 // Route::get('/', [CategoryController::class, 'index']);
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/post/{id}',[PostController::class, 'show'])->name('show.show');
 Route::get('/support', [SupportController::class, 'index'])->name('support');
 Route::post('/support', [SupportController::class, 'sendSupportRequest'])->name('support.send');
+// routes/web.php
 Route::resource('post', PostController::class);
+
 Route::get('/post/{id}/edit', [PostController::class, 'edit'])->name('edit');
-Route::put('/posts/{id}', [PostController::class, 'update'])->name('posts.update');
 Route::get('/categories/{id}/destroy', [CategoryController::class, 'destroy'])->name('destroy');
 // Route::get('/posts', 'PostController@index')->name('posts.index');
-Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
+
+Route::resource('categories', CategoryController::class);
+Route::get('/categories/create', [CategoryController::class, 'create'])->name('categories.create');
+Route::post('/', [CategoryController::class, 'store'])->name('categories.store');
+Route::put('/categories/{id}', [CategoryController::class, 'update'])->name('categories.update');
+Route::get('/categories/{id}/edit', [CategoryController::class, 'edit'])->name('categories.edit');
+Route::put('/categories/{category}', [CategoryController::class, 'update'])->name('categories.update');
 
 
+
+Route::post('/comments', [CommentController::class, 'store'])->name('comments.store');
 
 

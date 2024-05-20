@@ -50,11 +50,11 @@ class PostController extends Controller
         'gia' => 'required',
         'tacgia' => 'required',
         'nxb' => 'required',
-        'category_id' => 'required',
+        'category_id' => 'required|exists:categories,id',
     ]);
 
     // Tạo mới bài viết
-    $post = new Post();
+    $post = new Post;
     $post->tentruyen = $validatedData['tentruyen'];
     $post->anhgioithieu = $validatedData['anhgioithieu'];
     $post->theloai = $validatedData['theloai'];
@@ -80,7 +80,7 @@ class PostController extends Controller
         $posts = Post::find($id);
         return view('show.show',['post' => $posts,'anhgioithieu'=>$posts->anhgioithieu]);
     }
-
+    
     /**
      * Show the form for editing the specified resource.
      *
@@ -89,9 +89,15 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        $post = Post::find($id);
-        $categories = Category::all(); // Đây là ví dụ, bạn cần truyền dữ liệu danh mục nếu cần
-        return view('posts.edit', compact('post', 'categories'));
+    $post = Post::find($id); // Lấy dữ liệu bài viết từ cơ sở dữ liệu bằng ID
+
+    if (!$post) {
+        return redirect()->route('posts.index')->with('error', 'Post not found');
+    }
+
+    $categories = Category::all(); // Lấy tất cả danh mục
+
+    return view('posts.edit', compact('post', 'categories'));
     }
 
     /**
@@ -103,31 +109,34 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
+    // Validate the incoming request data
+    $validatedData = $request->validate([
+        'tentruyen' => 'required',
+        'anhgioithieu' => 'required',
+        'theloai' => 'required',
+        'thongtingioithieu' => 'required',
+        'gia' => 'required',
+        'tacgia' => 'required',
+        'nxb' => 'required',
+        'category_id' => 'required|exists:categories,id',
+    ]);
 
-        $data = $request->validate([
-            'tentruyen' => 'required|max:255',
-            'anhgioithieu' => 'required',
-            'thongtingioithieu' => 'required|max:255', // Sửa lại thành 'thongtingioithieu'
-            'theloai' => 'required|max:255',
-            'gia' => 'required|max:255',
-            'tacgia' => 'required|max:255',
-            'nxb' => 'required|max:255',
-            'category_id' => 'required|exists:categories,id', // Fixed team table name
-        ]);
-        $post = Post::findOrFail($id);
-        $post->tentruyen = $request->input('tentruyen');
-        $post->anhgioithieu = $request->input('anhgioithieu');
-        $posts->thongtingioithieu = $data['thongtingioithieu'];
-        $posts->theloai = $data['theloai'];
-        $posts->gia = $data['gia'];
-        $posts->tacgia = $data['tacgia'];
-        $posts->nxb = $data['nxb'];
-        // $posts->anhgioithieu = $data['anhgioithieu'];
-        $posts->category_id = $data['category_id'];
-        $posts->save();
+    $post = Post::findOrFail($id);
+    $post->tentruyen = $validatedData['tentruyen'];
+    $post->anhgioithieu = $validatedData['anhgioithieu'];
+    $post->theloai = $validatedData['theloai'];
+    $post->thongtingioithieu = $validatedData['thongtingioithieu'];
+    $post->gia = $validatedData['gia'];
+    $post->tacgia = $validatedData['tacgia'];
+    $post->nxb = $validatedData['nxb'];
+    $post->category_id = $validatedData['category_id'];
+    $post->update($validatedData);
+    $post->save();
+   
 
-        return redirect()->route('posts.index')->with('status', 'Cập nhật truyện thành công!');
+    return redirect()->route('posts.index')->with('status', 'Cập nhật truyện thành công!');
     }
+
 
     /**
      * Remove the specified resource from storage.

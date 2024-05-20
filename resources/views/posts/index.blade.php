@@ -18,13 +18,13 @@
                             <tr>
                                 <th scope="col">#</th>
                                 <th scope="col">Tên truyện</th>
-                                <th scope="col">Ảnh Giới thiệu</th>
                                 <th scope="col">Thể loại</th>
                                 <th scope="col">Thông tin giới thiệu</th>
-                                <th scope="col">Giá</th>
+                                <th scope="col">gia</th>
                                 <th scope="col">Tác giả</th>
-                                <th scope="col">Nhà Xuất Bản</th>
-                                <th scope="col">Đội nhóm</th>
+                                <th scope="col">NXB</th>
+                                <th scope="col">Ảnh</th>
+                                <th scope="col"></th>
                                 <th scope="col">Thao tác</th>
                             </tr>
                         </thead>

@@ -1,0 +1,22 @@
+h1.text-center {
+    font-size: 2.5rem; /* Kích thước font chữ lớn hơn */
+    color: #333; /* Màu chữ */
+    text-transform: uppercase; /* Chuyển đổi thành chữ hoa */
+    font-weight: bold; /* Đậm */
+   
+}
+h1.text-center {
+   
+}
+h1.text-center {
+    color: #ff7f50; /* Màu cam */
+    font-family: Arial, sans-serif; /* Phông chữ */
+}
+
+.custom-image {
+    width: 100%;
+    height: auto;
+    min-width: 100%; /* Đảm bảo chiều rộng tối thiểu là 400px */
+    min-height: 250px; /* Đảm bảo chiều cao tối thiểu là 300px */
+    object-fit: cover;
+}

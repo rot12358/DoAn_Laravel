@@ -15,7 +15,7 @@ class CategoryController extends Controller
     public function index()
     {
         $cates = Category::orderBy('id','DESC')->get();
-        return view('category')->with(compact('cates'));
+        return view('categories.index')->with(compact('cates'));
     }
 
     /**
@@ -25,7 +25,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return view('teams.create');
+        return view('categories.create');
     }
 
     /**
@@ -36,20 +36,16 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $request ->validate([
-            'theloaitruyen' =>'required|unique:team|max:255',
-        ],
-        [
-            'theloaitruyen.required' => 'Nhập tiêu đề',
-            'theloaitruyen.unique' => 'Tiêu đề này đã tồn tại,nhập tiêu đề khác!'
-        ]
-        );
-        $cate = new Category;
-        $cate->name = $data['theloaitruyen'];
-        $cate->save();
+        $validatedData = $request->validate([
+            'theloaitruyen' => 'required|string|max:255',
+            'is_active' => 'required|boolean',
+        ]);
 
-        return redirect()->route('category')->with('status','Thêm Truyện thành công!');
+        Category::create($validatedData);
+
+        return redirect()->route('categories.index')->with('status', 'Danh mục đã được thêm thành công!');
     }
+
 
     /**
      * Display the specified resource.
@@ -60,7 +56,7 @@ class CategoryController extends Controller
     public function show($id)
     {
         $cate = Category::find($id);
-        return view('posts.show',['Category' => $cate,'Category'=>$cate->cate]);
+        return view('categories.show',['Category' => $cate,'Category'=>$cate->cate]);
     }
 
     /**
@@ -72,8 +68,7 @@ class CategoryController extends Controller
     public function edit($id)
     {
         $cate = Category::find($id);
-        $cate = Category::all(); // Assuming you have a Team model
-        return view('teams.edit',compact('cate','teams'));
+        return view('categories.edit')->with(compact('cate'));
     }
 
     /**
@@ -85,21 +80,19 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $data = $request->validate(
-            [
-                'theloaitruyen' =>'required:team|max:255',
-            ],
-            [
-                'theloaitruyen.required'=> 'Nhập tiêu đề',
-            ]
-            );
-            $cate = Category::find($id);
-            $cate->theloaitruyen = $data['theloaitruyen'];
-            $cate->save();
+        $validatedData = $request->validate([
+            'theloaitruyen' => 'required|string|max:255',
+            'is_active' => 'required|boolean',
+        ]);
 
-            return redirect()->route('category')->with('status','Cập nhập Truyện thành công');
+        $category = Category::findOrFail($id);
+        $category->theloaitruyen = $validatedData['theloaitruyen'];
+        $category->is_active = $validatedData['is_active'];
+        $category->update($validatedData);
+        $category->save();
+
+        return redirect()->route('categories.index')->with('status', 'Cập nhật danh mục thành công!');
     }
-
     /**
      * Remove the specified resource from storage.
      *
@@ -109,6 +102,6 @@ class CategoryController extends Controller
     public function destroy($id)
     {
         Category::find($id)->delete();
-        return redirect()->route('category')->with('status','Xoá thành công Truyện');
+        return redirect()->route('categories.index')->with('status','Xoá thành công Truyện');
     }
 }

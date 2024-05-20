@@ -38,8 +38,7 @@
     </header>
 
     <div class="container mt-5">
-        <h1>Trang Hỗ Trợ</h1>
-        <p>Đây là trang hỗ trợ của chúng tôi. Hãy liên hệ nếu bạn cần trợ giúp.</p>
+        
         
         <form action="{{ route('support.send') }}" method="POST">
             @csrf
@@ -60,7 +59,7 @@
                 <input type="text" class="form-control" id="address" name="address" placeholder="Nhập địa chỉ của bạn">
             </div>
             <div class="mb-3">
-                <label for="message" class="form-label">Thông tin bạn muốn hỗ trợ</label>
+                <label for="message" class="form-label">Ý Kiến Của Mọi Người</label>
                 <textarea class="form-control" id="message" name="message" rows="5" placeholder="Nhập thông tin bạn muốn hỗ trợ"></textarea>
             </div>
             <button type="submit" class="btn btn-primary">Gửi</button>
