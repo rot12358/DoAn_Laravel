@@ -41,34 +41,28 @@ class PostController extends Controller
      */
     public function store(Request $request)
 {
-    // Validate dữ liệu được gửi từ biểu mẫu
     $validatedData = $request->validate([
-        'tentruyen' => 'required',
-        'anhgioithieu' => 'required',
-        'theloai' => 'required',
-        'thongtingioithieu' => 'required',
-        'gia' => 'required',
-        'tacgia' => 'required',
-        'nxb' => 'required',
+        'tentruyen' => 'required|string|max:255',
+        'anhgioithieu' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        'theloai' => 'required|string|max:255',
+        'thongtingioithieu' => 'required|string',
+        'gia' => 'required|numeric',
+        'tacgia' => 'required|string|max:255',
+        'nxb' => 'required|string|max:255',
         'category_id' => 'required|exists:categories,id',
     ]);
 
-    // Tạo mới bài viết
-    $post = new Post;
-    $post->tentruyen = $validatedData['tentruyen'];
-    $post->anhgioithieu = $validatedData['anhgioithieu'];
-    $post->theloai = $validatedData['theloai'];
-    $post->thongtingioithieu = $validatedData['thongtingioithieu'];
-    $post->gia = $validatedData['gia'];
-    $post->tacgia = $validatedData['tacgia'];
-    $post->nxb = $validatedData['nxb'];
-    $post->category_id = $validatedData['category_id'];
-    $post->save();
+    if ($request->hasFile('anhgioithieu')) {
+        $image = $request->file('anhgioithieu');
+        $imageName = time() . '.' . $image->getClientOriginalExtension();
+        $image->move(public_path('images'), $imageName);
+        $validatedData['anhgioithieu'] = 'images/' . $imageName;
+    }
 
-    // Redirect về trang hiển thị danh sách bài viết hoặc thêm thông báo thành công
-    return redirect()->route('posts.index')->with('status', 'Bài viết đã được thêm thành công!');
+    Post::create($validatedData);
+
+    return redirect()->route('posts.index')->with('status', 'Truyện đã được thêm thành công!');
 }
-
     /**
      * Display the specified resource.
      *
@@ -108,11 +102,11 @@ class PostController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {
+{
     // Validate the incoming request data
     $validatedData = $request->validate([
         'tentruyen' => 'required',
-        'anhgioithieu' => 'required',
+        'anhgioithieu' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         'theloai' => 'required',
         'thongtingioithieu' => 'required',
         'gia' => 'required',
@@ -123,19 +117,33 @@ class PostController extends Controller
 
     $post = Post::findOrFail($id);
     $post->tentruyen = $validatedData['tentruyen'];
-    $post->anhgioithieu = $validatedData['anhgioithieu'];
+
+    if ($request->hasFile('anhgioithieu')) {
+        // Xóa ảnh cũ nếu có
+        if ($post->anhgioithieu) {
+            Storage::delete('public/' . $post->anhgioithieu);
+        }
+
+        $get_image = $request->anhgioithieu;
+        $path = 'public/images';
+        $get_name_image = $get_image->getClientOriginalName();
+        $name_image = current(explode('.',$get_name_image));
+        $new_image = $name_image.rand(0,99).'.'.$get_image->getClientOriginalExtension();
+        $get_image->move($path, $new_image);
+        $post->anhgioithieu = $new_image;
+    }
+
     $post->theloai = $validatedData['theloai'];
     $post->thongtingioithieu = $validatedData['thongtingioithieu'];
     $post->gia = $validatedData['gia'];
     $post->tacgia = $validatedData['tacgia'];
     $post->nxb = $validatedData['nxb'];
     $post->category_id = $validatedData['category_id'];
-    $post->update($validatedData);
     $post->save();
-   
 
     return redirect()->route('posts.index')->with('status', 'Cập nhật truyện thành công!');
-    }
+}
+
 
 
     /**

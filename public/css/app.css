@@ -20,3 +20,8 @@ h1.text-center {
     min-height: 250px; /* Đảm bảo chiều cao tối thiểu là 300px */
     object-fit: cover;
 }
+.image-container img{
+    object-fit: cover;
+    height: 150px;
+    
+}

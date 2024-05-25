@@ -1,6 +1,5 @@
 @extends('layouts.master')
 
-
 @section('create')
 <div class="container">
     <div class="row justify-content-center">
@@ -25,7 +24,7 @@
                     </div>
                     @endif
 
-                    <form method="POST" action="{{ route('posts.store') }}">
+                    <form method="POST" action="{{ route('posts.store') }}" enctype="multipart/form-data">
                         @csrf
                         <div class="mb-3">
                             <label for="exampleInputName" class="form-label">Tên Truyện</label>
@@ -33,9 +32,22 @@
                         </div>
 
                         <div class="mb-3">
-                            <label for="exampleInputEmail" class="form-label">Ảnh giới thiệu</label>
-                            <input type="text" name="anhgioithieu" value="{{ old('anhgioithieu') }}" class="form-control" id="exampleInputEmail" aria-describedby="emailHelp">
+                            <label for="anhgioithieu" class="form-label">Ảnh:</label>
+                            <input type="file" name="anhgioithieu" id="image" class="form-control-file" onchange="previewImage(event)">
+                            <img id="image-preview" src="" alt="Post Image" class="mt-2 img-thumbnail" style="max-width: 200px;">
                         </div>
+                        <script>
+                            function previewImage(event) {
+                                var input = event.target;
+                                var reader = new FileReader();
+                                reader.onload = function () {
+                                    var dataURL = reader.result;
+                                    var output = document.getElementById('image-preview');
+                                    output.src = dataURL;
+                                };
+                                reader.readAsDataURL(input.files[0]);
+                            }
+                        </script>
 
                         <div class="mb-3">
                             <label for="exampleInputEmail" class="form-label">Thể loại</label>
@@ -63,13 +75,13 @@
                         </div>
                        
                         <div class="mb-3">
-                    <label for="category" class="form-label">Danh mục</label>
-                    <select name="category_id" class="form-select" id="category">
-                        @foreach($categories as $category)
-                        <option value="{{ $category->id }}">{{ $category->theloaitruyen }}</option>
-                        @endforeach
-                    </select>
-                </div>
+                            <label for="category" class="form-label">Danh mục</label>
+                            <select name="category_id" class="form-select" id="category">
+                                @foreach($categories as $category)
+                                <option value="{{ $category->id }}">{{ $category->theloaitruyen }}</option>
+                                @endforeach
+                            </select>
+                        </div>
 
                         <button type="submit" class="btn btn-dark">Thêm</button>
                     </form>

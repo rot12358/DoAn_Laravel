@@ -1,4 +1,3 @@
-
 @extends('layouts.master')
 @section('content')
 <div class="container">
@@ -20,11 +19,11 @@
                                 <th scope="col">Tên truyện</th>
                                 <th scope="col">Thể loại</th>
                                 <th scope="col">Thông tin giới thiệu</th>
-                                <th scope="col">gia</th>
+                                <th scope="col">Giá</th>
                                 <th scope="col">Tác giả</th>
                                 <th scope="col">NXB</th>
                                 <th scope="col">Ảnh</th>
-                                <th scope="col"></th>
+                                <th scope="col">Danh mục</th>
                                 <th scope="col">Thao tác</th>
                             </tr>
                         </thead>
@@ -39,8 +38,8 @@
                                 <td>{{ $post->gia }}</td>
                                 <td>{{ $post->tacgia }}</td>
                                 <td>{{ $post->nxb }}</td>
-                                <td><img src="{{ $post->anhgioithieu }}" alt="image" style="width: 100px;"></td>
-                                <td>{{ $post->find($post->category_id)->theloaitruyen }}</td> <!-- Assuming team has a 'name' field -->
+                                <td><img src="{{ asset($post->anhgioithieu) }}" alt="image" style="width: 100px;"></td>
+                                <td>{{ $post->category->theloaitruyen }}</td>
                                 <td>
                                     <a href="{{ route('post.edit', [$post->id]) }}" class="btn btn-primary">Sửa</a>
                                     <form action="{{ route('post.destroy', [$post->id]) }}" method="POST" style="display:inline-block;">

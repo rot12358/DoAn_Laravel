@@ -1,0 +1,11 @@
+.card img{
+    object-fit: cover;
+    height: 150px;
+    width: 100%;
+}
+
+ .disabled-link {
+        pointer-events: none;
+        cursor: not-allowed;
+    }
+

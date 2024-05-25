@@ -2,7 +2,7 @@
 
 @section('content1')
 
-<div class="container">
+<div class="container mt-5">
     <div class="row">
         <div class="col-md-12">
             <a href="/" class="btn btn-secondary mb-4">Quay lại</a>

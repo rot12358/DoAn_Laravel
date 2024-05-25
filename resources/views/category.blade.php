@@ -33,10 +33,6 @@
         @endforeach
     </div>
 </div>
-@endforeach
-@endsection
-
-@section('styles')
 <style>
     .custom-image {
         width: 100%;
@@ -44,4 +40,9 @@
         object-fit: cover;
     }
 </style>
+@endforeach
+@endsection
+
+@section('styles')
+
 @endsection

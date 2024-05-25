@@ -6,7 +6,7 @@
         @foreach($posts as $post)
         <div class="col-md-4 mb-4">
             <div class="card">
-            <a href="{{ route('show.show',['id' => $post->id]) }}">
+                <a href="{{ route('show.show',['id' => $post->id]) }}">
                     <img src="{{ $post->anhgioithieu }}" alt="{{ $post->tentruyen }}" class="card-img-top img-fluid custom-img"> <!-- Thêm class custom-img -->
                 </a>
                 <div class="card-body">

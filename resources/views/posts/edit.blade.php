@@ -17,10 +17,22 @@
                         </div>
 
                         <div class="mb-3">
-                            <label for="anhgioithieu" class="form-label">Ảnh Giới thiệu</label>
-                            <input type="text" name="anhgioithieu" value="{{ $post->anhgioithieu }}" class="form-control" id="anhgioithieu">
+                            <label for="anhgioithieu" class="form-label">Ảnh:</label>
+                            <input type="file" name="anhgioithieu" id="image" class="form-control-file" onchange="previewImage(event)">
+                            <img id="image-preview" src="" alt="Post Image" class="mt-2 img-thumbnail" style="max-width: 200px;">
                         </div>
-
+                        <script>
+                            function previewImage(event) {
+                                var input = event.target;
+                                var reader = new FileReader();
+                                reader.onload = function () {
+                                    var dataURL = reader.result;
+                                    var output = document.getElementById('image-preview');
+                                    output.src = dataURL;
+                                };
+                                reader.readAsDataURL(input.files[0]);
+                            }
+                        </script>
                         <div class="mb-3">
                             <label for="theloai" class="form-label">Thể loại</label>
                             <input type="text" name="theloai" value="{{ $post->theloai }}" class="form-control" id="theloai">
