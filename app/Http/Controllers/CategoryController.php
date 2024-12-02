@@ -7,7 +7,7 @@ use App\Models\Post;
 use App\Models\Category;
 class CategoryController extends Controller
 {
-   
+
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +15,11 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $cates = Category::orderBy('id','DESC')->get();
+        $cates = Category::with([
+            'posts' => function ($query) {
+                $query->take(4);  // Giới hạn mỗi thể loại chỉ lấy 4 bài viết
+            }
+        ])->get();
         return view('categories.index')->with(compact('cates'));
     }
 
@@ -57,7 +61,7 @@ class CategoryController extends Controller
     public function show($id)
     {
         $cate = Category::find($id);
-        return view('categories.show',['Category' => $cate,'Category'=>$cate->cate]);
+        return view('categories.show', ['Category' => $cate, 'Category' => $cate->cate]);
     }
 
     /**
@@ -103,6 +107,27 @@ class CategoryController extends Controller
     public function destroy($id)
     {
         Category::find($id)->delete();
-        return redirect()->route('categories.index')->with('status','Xoá thành công Truyện');
+        return redirect()->route('categories.index')->with('status', 'Xoá thành công Truyện');
+    }
+    public function filterByCategory($categoryId)
+    {
+        if ($categoryId == 'all') {
+            // Lấy tất cả các bài viết nếu chọn "Tất cả"
+            $posts = Post::all();
+        } else {
+            // Lấy bài viết theo thể loại
+            $category = Category::with('posts')->find($categoryId);
+            $posts = $category ? $category->posts : [];
+        }
+
+        // Trả về JSON
+        return response()->json([
+            'posts' => $posts
+        ]);
+    }
+    public function showCategories()
+    {
+        $category = Category::where('name', 'Ngôn Tình')->first(); // Chỉ lấy 1 thể loại "Ngôn Tình"
+        return view('posts.show', compact('cate'));
     }
 }

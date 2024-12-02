@@ -32,7 +32,7 @@
                                 </a>
                                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown" >
                                     <li><a class="dropdown-item" href="{{route(posts create')}}">Thêm bài viết</a></li>
-                                    <li><a class="dropdown-item" href="{{route('posts.index' )}]">Liệt kê bài viết</a></li>
+                                    <li><a class="dropdown-item" href="{{route('posts.index' )}}">Liệt kê bài viết</a></li>
                                 </ul>
                               </li>
                             </ul>

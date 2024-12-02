@@ -83,15 +83,15 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-    $post = Post::find($id); // Lấy dữ liệu bài viết từ cơ sở dữ liệu bằng ID
+        $post = Post::find($id); // Lấy dữ liệu bài viết từ cơ sở dữ liệu bằng ID
 
-    if (!$post) {
-        return redirect()->route('posts.index')->with('error', 'Post not found');
-    }
+        if (!$post) {
+            return redirect()->route('posts.index')->with('error', 'Post not found');
+        }
 
-    $categories = Category::all(); // Lấy tất cả danh mục
+        $categories = Category::all(); // Lấy tất cả danh mục
 
-    return view('posts.edit', compact('post', 'categories'));
+        return view('posts.edit', compact('post', 'categories'));
     }
 
     /**

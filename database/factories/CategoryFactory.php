@@ -19,7 +19,7 @@ class CategoryFactory extends Factory
     public function definition()
     {
         return [
-            'theloaitruyen' => $this ->faker -> randomElement(['Truyện Thiếu Nhi','Truyện Hoạt Hình','Truyện Anime']),
+            'theloaitruyen',
             'is_active' => true
             
           

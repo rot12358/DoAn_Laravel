@@ -19,13 +19,13 @@ class PostFactory extends Factory
     public function definition()
     {
         return [
-            'tentruyen' => $this -> faker ->name(),
-            'anhgioithieu' => $this->faker->imageUrl(),
-            'theloai' => $this ->faker -> randomElement(['Truyện cười','Hoạt Hình','Anime']),
-            'thongtingioithieu' => $this->faker->paragraph(2, 50),
-            'gia'=>random_int(50,1000),
-            'tacgia'=> $this -> faker -> name(),
-            'nxb'=>$this -> faker ->randomElement(['NXB Nhi đồng','NXB Hoạt hình','NXB Anime']),
+            'tentruyen',
+            'anhgioithieu',
+            'theloai',
+            'thongtingioithieu',
+            'gia',
+            'tacgia',
+            'nxb',
             'category_id'=>random_int(1,3),
         ];
     }
